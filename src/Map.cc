@@ -174,10 +174,10 @@ vector<MapPoint*> Map::GetReferenceMapPoints()
     return mvpReferenceMapPoints;
 }
 
-long unsigned int Map::GetId()
-{
+long unsigned int Map::GetId() {
     return mnId;
 }
+
 long unsigned int Map::GetInitKFid()
 {
     unique_lock<mutex> lock(mMutexMap);
@@ -190,8 +190,7 @@ void Map::SetInitKFid(long unsigned int initKFif)
     mnInitKFid = initKFif;
 }
 
-long unsigned int Map::GetMaxKFid()
-{
+long unsigned int Map::GetMaxKFid() {
     unique_lock<mutex> lock(mMutexMap);
     return mnMaxKFid;
 }
@@ -201,23 +200,19 @@ KeyFrame* Map::GetOriginKF()
     return mpKFinitial;
 }
 
-void Map::SetCurrentMap()
-{
+void Map::SetCurrentMap() {
     mIsInUse = true;
 }
 
-void Map::SetStoredMap()
-{
+void Map::SetStoredMap() {
     mIsInUse = false;
 }
 
-void Map::clear()
-{
+void Map::clear() {
 //    for(set<MapPoint*>::iterator sit=mspMapPoints.begin(), send=mspMapPoints.end(); sit!=send; sit++)
 //        delete *sit;
 
-    for(set<KeyFrame*>::iterator sit=mspKeyFrames.begin(), send=mspKeyFrames.end(); sit!=send; sit++)
-    {
+    for(set<KeyFrame*>::iterator sit = mspKeyFrames.begin(), send = mspKeyFrames.end(); sit != send; sit++) {
         KeyFrame* pKF = *sit;
         pKF->UpdateMap(static_cast<Map*>(NULL));
 //        delete *sit;
@@ -282,14 +277,12 @@ void Map::ApplyScaledRotation(const Sophus::SE3f &T, const float s, const bool b
     mnMapChange++;
 }
 
-void Map::SetInertialSensor()
-{
+void Map::SetInertialSensor() {
     unique_lock<mutex> lock(mMutexMap);
     mbIsInertial = true;
 }
 
-bool Map::IsInertial()
-{
+bool Map::IsInertial() {
     unique_lock<mutex> lock(mMutexMap);
     return mbIsInertial;
 }

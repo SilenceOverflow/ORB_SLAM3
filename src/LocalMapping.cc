@@ -51,14 +51,12 @@ LocalMapping::LocalMapping(System* pSys, Atlas *pAtlas, const float bMonocular, 
 
 }
 
-void LocalMapping::SetLoopCloser(LoopClosing* pLoopCloser)
-{
+void LocalMapping::SetLoopCloser(LoopClosing* pLoopCloser) {
     mpLoopCloser = pLoopCloser;
 }
 
-void LocalMapping::SetTracker(Tracking *pTracker)
-{
-    mpTracker=pTracker;
+void LocalMapping::SetTracker(Tracking *pTracker) {
+    mpTracker = pTracker;
 }
 
 void LocalMapping::Run()

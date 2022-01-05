@@ -55,13 +55,12 @@ Atlas::~Atlas()
     }
 }
 
-void Atlas::CreateNewMap()
-{
+void Atlas::CreateNewMap() {
     unique_lock<mutex> lock(mMutexAtlas);
     cout << "Creation of new map with id: " << Map::nNextId << endl;
     if(mpCurrentMap){
         if(!mspMaps.empty() && mnLastInitKFidMap < mpCurrentMap->GetMaxKFid())
-            mnLastInitKFidMap = mpCurrentMap->GetMaxKFid()+1; //The init KF is the next of current maximum
+            mnLastInitKFidMap = mpCurrentMap->GetMaxKFid() + 1; //The init KF is the next of current maximum
 
         mpCurrentMap->SetStoredMap();
         cout << "Stored map with ID: " << mpCurrentMap->GetId() << endl;
@@ -206,17 +205,14 @@ std::vector<MapPoint*> Atlas::GetReferenceMapPoints()
     return mpCurrentMap->GetReferenceMapPoints();
 }
 
-vector<Map*> Atlas::GetAllMaps()
-{
+vector<Map*> Atlas::GetAllMaps() {
     unique_lock<mutex> lock(mMutexAtlas);
-    struct compFunctor
-    {
-        inline bool operator()(Map* elem1 ,Map* elem2)
-        {
+    struct compFunctor {
+        inline bool operator()(Map* elem1 ,Map* elem2) {
             return elem1->GetId() < elem2->GetId();
         }
     };
-    vector<Map*> vMaps(mspMaps.begin(),mspMaps.end());
+    vector<Map*> vMaps(mspMaps.begin(), mspMaps.end());
     sort(vMaps.begin(), vMaps.end(), compFunctor());
     return vMaps;
 }
@@ -227,8 +223,7 @@ int Atlas::CountMaps()
     return mspMaps.size();
 }
 
-void Atlas::clearMap()
-{
+void Atlas::clearMap() {
     unique_lock<mutex> lock(mMutexAtlas);
     mpCurrentMap->clear();
 }
@@ -275,14 +270,12 @@ void Atlas::RemoveBadMaps()
     mspBadMaps.clear();
 }
 
-bool Atlas::isInertial()
-{
+bool Atlas::isInertial() {
     unique_lock<mutex> lock(mMutexAtlas);
     return mpCurrentMap->IsInertial();
 }
 
-void Atlas::SetInertialSensor()
-{
+void Atlas::SetInertialSensor() {
     unique_lock<mutex> lock(mMutexAtlas);
     mpCurrentMap->SetInertialSensor();
 }

@@ -76,14 +76,12 @@ LoopClosing::LoopClosing(Atlas *pAtlas, KeyFrameDatabase *pDB, ORBVocabulary *pV
     mnCorrectionGBA = 0;
 }
 
-void LoopClosing::SetTracker(Tracking *pTracker)
-{
-    mpTracker=pTracker;
+void LoopClosing::SetTracker(Tracking *pTracker) {
+    mpTracker = pTracker;
 }
 
-void LoopClosing::SetLocalMapper(LocalMapping *pLocalMapper)
-{
-    mpLocalMapper=pLocalMapper;
+void LoopClosing::SetLocalMapper(LocalMapping *pLocalMapper) {
+    mpLocalMapper = pLocalMapper;
 }
 
 

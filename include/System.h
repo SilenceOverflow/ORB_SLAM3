@@ -41,32 +41,27 @@
 #include "Settings.h"
 
 
-namespace ORB_SLAM3
-{
+namespace ORB_SLAM3 {
 
-class Verbose
-{
+class Verbose {
 public:
-    enum eLevel
-    {
-        VERBOSITY_QUIET=0,
-        VERBOSITY_NORMAL=1,
-        VERBOSITY_VERBOSE=2,
-        VERBOSITY_VERY_VERBOSE=3,
-        VERBOSITY_DEBUG=4
+    enum eLevel {
+        VERBOSITY_QUIET = 0,
+        VERBOSITY_NORMAL = 1,
+        VERBOSITY_VERBOSE = 2,
+        VERBOSITY_VERY_VERBOSE = 3,
+        VERBOSITY_DEBUG = 4
     };
 
     static eLevel th;
 
 public:
-    static void PrintMess(std::string str, eLevel lev)
-    {
+    static void PrintMess(std::string str, eLevel lev) {
         if(lev <= th)
             cout << str << endl;
     }
 
-    static void SetTh(eLevel _th)
-    {
+    static void SetTh(eLevel _th) {
         th = _th;
     }
 };
@@ -84,19 +79,19 @@ class System
 {
 public:
     // Input sensor
-    enum eSensor{
-        MONOCULAR=0,
-        STEREO=1,
-        RGBD=2,
-        IMU_MONOCULAR=3,
-        IMU_STEREO=4,
-        IMU_RGBD=5,
+    enum eSensor {
+        MONOCULAR = 0,
+        STEREO = 1,
+        RGBD = 2,
+        IMU_MONOCULAR = 3,
+        IMU_STEREO = 4,
+        IMU_RGBD = 5,
     };
 
     // File type
-    enum FileType{
-        TEXT_FILE=0,
-        BINARY_FILE=1,
+    enum FileType {
+        TEXT_FILE = 0,
+        BINARY_FILE = 1,
     };
 
 public:

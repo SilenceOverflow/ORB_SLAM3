@@ -65,8 +65,7 @@ void KeyFrameDatabase::erase(KeyFrame* pKF)
     }
 }
 
-void KeyFrameDatabase::clear()
-{
+void KeyFrameDatabase::clear() {
     mvInvertedFile.clear();
     mvInvertedFile.resize(mpVoc->size());
 }

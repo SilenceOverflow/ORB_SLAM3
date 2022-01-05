@@ -838,8 +838,7 @@ Map* KeyFrame::GetMap()
     return mpMap;
 }
 
-void KeyFrame::UpdateMap(Map* pMap)
-{
+void KeyFrame::UpdateMap(Map* pMap) {
     unique_lock<mutex> lock(mMutexMap);
     mpMap = pMap;
 }

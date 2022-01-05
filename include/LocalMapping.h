@@ -97,7 +97,7 @@ public:
     int mnMatchesInliers;
 
     // For debugging (erase in normal mode)
-    int mInitFr;
+    // int mInitFr;
     int mIdxIteration;
     string strSequence;
 
@@ -108,8 +108,8 @@ public:
     bool mbWriteStats;
 
     // not consider far points (clouds)
-    bool mbFarPoints;
-    float mThFarPoints;
+    bool mbFarPoints;       // whether discard far points in map
+    float mThFarPoints;     // unit: m
 
 #ifdef REGISTER_TIMES
     vector<double> vdKFInsert_ms;

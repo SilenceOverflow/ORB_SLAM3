@@ -1424,19 +1424,16 @@ bool Tracking::ParseIMUParamFile(cv::FileStorage &fSettings)
     return true;
 }
 
-void Tracking::SetLocalMapper(LocalMapping *pLocalMapper)
-{
-    mpLocalMapper=pLocalMapper;
+void Tracking::SetLocalMapper(LocalMapping *pLocalMapper) {
+    mpLocalMapper = pLocalMapper;
 }
 
-void Tracking::SetLoopClosing(LoopClosing *pLoopClosing)
-{
-    mpLoopClosing=pLoopClosing;
+void Tracking::SetLoopClosing(LoopClosing *pLoopClosing) {
+    mpLoopClosing = pLoopClosing;
 }
 
-void Tracking::SetViewer(Viewer *pViewer)
-{
-    mpViewer=pViewer;
+void Tracking::SetViewer(Viewer *pViewer) {
+    mpViewer = pViewer;
 }
 
 void Tracking::SetStepByStep(bool bSet)
@@ -1563,43 +1560,34 @@ Sophus::SE3f Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, co
 }
 
 
-Sophus::SE3f Tracking::GrabImageMonocular(const cv::Mat &im, const double &timestamp, string filename)
-{
+Sophus::SE3f Tracking::GrabImageMonocular(const cv::Mat &im, const double &timestamp, string filename) {
     mImGray = im;
-    if(mImGray.channels()==3)
-    {
+    if(mImGray.channels() == 3) {
         if(mbRGB)
-            cvtColor(mImGray,mImGray,cv::COLOR_RGB2GRAY);
+            cvtColor(mImGray,mImGray, cv::COLOR_RGB2GRAY);
         else
-            cvtColor(mImGray,mImGray,cv::COLOR_BGR2GRAY);
-    }
-    else if(mImGray.channels()==4)
-    {
+            cvtColor(mImGray,mImGray, cv::COLOR_BGR2GRAY);
+    } else if(mImGray.channels() == 4) {
         if(mbRGB)
-            cvtColor(mImGray,mImGray,cv::COLOR_RGBA2GRAY);
+            cvtColor(mImGray,mImGray, cv::COLOR_RGBA2GRAY);
         else
-            cvtColor(mImGray,mImGray,cv::COLOR_BGRA2GRAY);
+            cvtColor(mImGray,mImGray, cv::COLOR_BGRA2GRAY);
     }
 
-    if (mSensor == System::MONOCULAR)
-    {
-        if(mState==NOT_INITIALIZED || mState==NO_IMAGES_YET ||(lastID - initID) < mMaxFrames)
-            mCurrentFrame = Frame(mImGray,timestamp,mpIniORBextractor,mpORBVocabulary,mpCamera,mDistCoef,mbf,mThDepth);
+    if (mSensor == System::MONOCULAR) {
+        if(mState == NOT_INITIALIZED || mState == NO_IMAGES_YET || (lastID - initID) < mMaxFrames)
+            mCurrentFrame = Frame(mImGray, timestamp, mpIniORBextractor, mpORBVocabulary, mpCamera, mDistCoef, mbf, mThDepth);
         else
-            mCurrentFrame = Frame(mImGray,timestamp,mpORBextractorLeft,mpORBVocabulary,mpCamera,mDistCoef,mbf,mThDepth);
-    }
-    else if(mSensor == System::IMU_MONOCULAR)
-    {
-        if(mState==NOT_INITIALIZED || mState==NO_IMAGES_YET)
-        {
-            mCurrentFrame = Frame(mImGray,timestamp,mpIniORBextractor,mpORBVocabulary,mpCamera,mDistCoef,mbf,mThDepth,&mLastFrame,*mpImuCalib);
-        }
+            mCurrentFrame = Frame(mImGray, timestamp, mpORBextractorLeft, mpORBVocabulary, mpCamera, mDistCoef, mbf, mThDepth);
+    } else if(mSensor == System::IMU_MONOCULAR) {
+        if(mState == NOT_INITIALIZED || mState == NO_IMAGES_YET)
+            mCurrentFrame = Frame(mImGray, timestamp, mpIniORBextractor, mpORBVocabulary, mpCamera, mDistCoef, mbf, mThDepth, &mLastFrame, *mpImuCalib);
         else
-            mCurrentFrame = Frame(mImGray,timestamp,mpORBextractorLeft,mpORBVocabulary,mpCamera,mDistCoef,mbf,mThDepth,&mLastFrame,*mpImuCalib);
+            mCurrentFrame = Frame(mImGray, timestamp, mpORBextractorLeft, mpORBVocabulary, mpCamera, mDistCoef, mbf, mThDepth, &mLastFrame, *mpImuCalib);
     }
 
-    if (mState==NO_IMAGES_YET)
-        t0=timestamp;
+    if (mState == NO_IMAGES_YET)
+        t0 = timestamp;
 
     mCurrentFrame.mNameFile = filename;
     mCurrentFrame.mnDataset = mnNumDataset;
@@ -1615,8 +1603,7 @@ Sophus::SE3f Tracking::GrabImageMonocular(const cv::Mat &im, const double &times
 }
 
 
-void Tracking::GrabImuData(const IMU::Point &imuMeasurement)
-{
+void Tracking::GrabImuData(const IMU::Point &imuMeasurement) {
     unique_lock<mutex> lock(mMutexImuQueue);
     mlQueueImuData.push_back(imuMeasurement);
 }
@@ -3776,8 +3763,7 @@ bool Tracking::Relocalization()
 
 }
 
-void Tracking::Reset(bool bLocMap)
-{
+void Tracking::Reset(bool bLocMap) {
     Verbose::PrintMess("System Reseting", Verbose::VERBOSITY_NORMAL);
 
     if(mpViewer)
@@ -3788,8 +3774,7 @@ void Tracking::Reset(bool bLocMap)
     }
 
     // Reset Local Mapping
-    if (!bLocMap)
-    {
+    if (!bLocMap) {
         Verbose::PrintMess("Reseting Local Mapper...", Verbose::VERBOSITY_NORMAL);
         mpLocalMapper->RequestReset();
         Verbose::PrintMess("done", Verbose::VERBOSITY_NORMAL);
@@ -3809,7 +3794,7 @@ void Tracking::Reset(bool bLocMap)
     // Clear Map (this erase MapPoints and KeyFrames)
     mpAtlas->clearAtlas();
     mpAtlas->CreateNewMap();
-    if (mSensor==System::IMU_STEREO || mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_RGBD)
+    if (mSensor == System::IMU_STEREO || mSensor == System::IMU_MONOCULAR || mSensor == System::IMU_RGBD)
         mpAtlas->SetInertialSensor();
     mnInitialFrameId = 0;
 
@@ -3818,7 +3803,7 @@ void Tracking::Reset(bool bLocMap)
     mState = NO_IMAGES_YET;
 
     mbReadyToInitializate = false;
-    mbSetInit=false;
+    mbSetInit = false;
 
     mlRelativeFramePoses.clear();
     mlpReferences.clear();
@@ -3837,8 +3822,7 @@ void Tracking::Reset(bool bLocMap)
     Verbose::PrintMess("   End reseting! ", Verbose::VERBOSITY_NORMAL);
 }
 
-void Tracking::ResetActiveMap(bool bLocMap)
-{
+void Tracking::ResetActiveMap(bool bLocMap) {
     Verbose::PrintMess("Active map Reseting", Verbose::VERBOSITY_NORMAL);
     if(mpViewer)
     {
@@ -3849,8 +3833,7 @@ void Tracking::ResetActiveMap(bool bLocMap)
 
     Map* pMap = mpAtlas->GetCurrentMap();
 
-    if (!bLocMap)
-    {
+    if (!bLocMap) {
         Verbose::PrintMess("Reseting Local Mapper...", Verbose::VERBOSITY_VERY_VERBOSE);
         mpLocalMapper->RequestResetActiveMap(pMap);
         Verbose::PrintMess("done", Verbose::VERBOSITY_VERY_VERBOSE);
@@ -3882,10 +3865,8 @@ void Tracking::ResetActiveMap(bool bLocMap)
     // lbLost.reserve(mlbLost.size());
     unsigned int index = mnFirstFrameId;
     cout << "mnFirstFrameId = " << mnFirstFrameId << endl;
-    for(Map* pMap : mpAtlas->GetAllMaps())
-    {
-        if(pMap->GetAllKeyFrames().size() > 0)
-        {
+    for(Map* pMap : mpAtlas->GetAllMaps()) {
+        if(pMap->GetAllKeyFrames().size() > 0) {
             if(index > pMap->GetLowerKFID())
                 index = pMap->GetLowerKFID();
         }
@@ -3895,12 +3876,10 @@ void Tracking::ResetActiveMap(bool bLocMap)
     int num_lost = 0;
     cout << "mnInitialFrameId = " << mnInitialFrameId << endl;
 
-    for(list<bool>::iterator ilbL = mlbLost.begin(); ilbL != mlbLost.end(); ilbL++)
-    {
+    for(list<bool>::iterator ilbL = mlbLost.begin(); ilbL != mlbLost.end(); ilbL++) {
         if(index < mnInitialFrameId)
             lbLost.push_back(*ilbL);
-        else
-        {
+        else {
             lbLost.push_back(true);
             num_lost += 1;
         }
@@ -3972,8 +3951,7 @@ void Tracking::ChangeCalibration(const string &strSettingPath)
     Frame::mbInitialComputations = true;
 }
 
-void Tracking::InformOnlyTracking(const bool &flag)
-{
+void Tracking::InformOnlyTracking(const bool &flag) {
     mbOnlyTracking = flag;
 }
 
