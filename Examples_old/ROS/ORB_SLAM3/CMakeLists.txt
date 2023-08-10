@@ -123,3 +123,11 @@ src/ros_stereo_inertial.cc
 target_link_libraries(Stereo_Inertial
 ${LIBS}
 )
+
+rosbuild_add_executable(zed2_stereo_inertial
+src/zed2_stereo_inertial.cc
+)
+
+target_link_libraries(zed2_stereo_inertial
+${LIBS}
+)

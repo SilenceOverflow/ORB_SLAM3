@@ -1,0 +1,167 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# System config
+#--------------------------------------------------------------------------------------------
+
+# When the variables are commented, the system doesn't load a previous session or not store the current one
+
+# If the LoadFile doesn't exist, the system give a message and create a new Atlas from scratch
+#System.LoadAtlasFromFile: "Session_MH01_MH02_MH03_Stereo60_Pseudo"
+
+# The store file is created from the current session, if a file with the same name exists it is deleted
+#System.SaveAtlasToFile: "Session_MH01_MH02_MH03_Stereo60_Pseudo"
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+File.version: "1.0"
+
+Camera.type: "PinHole"
+
+# Camera calibration and distortion parameters (OpenCV) 
+Camera1.fx: 263.19305599884416
+Camera1.fy: 263.54641278173773
+Camera1.cx: 342.33690250532277
+Camera1.cy: 197.0316852825522
+
+Camera1.k1: -0.033115060552668434 
+Camera1.k2: -0.004213141721342087
+Camera1.p1: -0.0002876554959238276
+Camera1.p2: 0.0011053099512744646
+
+Camera2.fx: 262.7088049257928
+Camera2.fy: 262.72919536137715
+Camera2.cx: 340.923012133296
+Camera2.cy: 199.9935175727528
+
+Camera2.k1: -0.036450724967971096
+Camera2.k2: -0.0023534917098123583
+Camera2.p1: -0.0008055812760570502
+Camera2.p2: -0.00010468050597689177
+
+Camera.width: 672
+Camera.height: 376
+
+# Camera frames per second
+Camera.fps: 30
+
+# Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
+Camera.RGB: 1
+
+# Close/Far threshold. Baseline times.
+Stereo.ThDepth: 40.0
+# Transformation from camera 2 to camera 1
+Stereo.T_c1_c2: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [0.99999762, -0.00029333, 0.00215976, 0.11988782,
+        0.00029375, 0.99999994, -0.00019299, -0.00016965,
+        -0.0021597, 0.00019362, 0.99999765, 0.00048051,
+        0.0, 0.0, 0.0, 1.0]
+
+# Transformation from camera 1 to body-frame (imu)
+IMU.T_b_c1: !!opencv-matrix
+  rows: 4
+  cols: 4
+  dt: f
+  data: [0.00284496,  0.00387706,  0.99998844,  0.0225266,
+        -0.99998998, -0.00344601,  0.00285833,  0.02162648,
+        0.00345705, -0.99998655,  0.00386722, -0.00182277,
+        0.0, 0.0, 0.0, 1.0]
+
+# #--------------------------------------------------------------------------------------------
+# # Stereo Rectification. Only if you need to pre-rectify the images.
+# # Camera.fx, .fy, etc must be the same as in LEFT.P
+# #--------------------------------------------------------------------------------------------
+# LEFT.height: 376
+# LEFT.width: 672
+# LEFT.D: !!opencv-matrix
+#    rows: 1
+#    cols: 5
+#    dt: d
+#    data:[-0.033115060552668434, -0.004213141721342087, -0.0002876554959238276, 0.0011053099512744646, 0.0]
+# LEFT.K: !!opencv-matrix
+#    rows: 3
+#    cols: 3
+#    dt: d
+#    data: [263.19305599884416, 0.0, 342.33690250532277, 0.0, 263.54641278173773, 197.0316852825522, 0.0, 0.0, 1.0]
+# LEFT.R:  !!opencv-matrix
+#    rows: 3
+#    cols: 3
+#    dt: d
+#    data: [0.999966347530033, -0.001422739138722922, 0.008079580483432283, 0.001365741834644127, 0.9999741760894847, 0.007055629199258132, -0.008089410156878961, -0.007044357138835809, 0.9999424675829176]
+# LEFT.P:  !!opencv-matrix
+#    rows: 3
+#    cols: 4
+#    dt: d
+#    data: [435.2046959714599, 0, 367.4517211914062, 0,  0, 435.2046959714599, 252.2008514404297, 0,  0, 0, 1, 0]
+
+# RIGHT.height: 376
+# RIGHT.width: 672
+# RIGHT.D: !!opencv-matrix
+#    rows: 1
+#    cols: 5
+#    dt: d
+#    data:[-0.036450724967971096, -0.0023534917098123583, -0.0008055812760570502, -0.00010468050597689177, 0.0]
+# RIGHT.K: !!opencv-matrix
+#    rows: 3
+#    cols: 3
+#    dt: d
+#    data: [262.7088049257928, 0.0, 340.923012133296, 0.0, 262.72919536137715, 199.9935175727528, 0.0, 0.0, 1]
+# RIGHT.R:  !!opencv-matrix
+#    rows: 3
+#    cols: 3
+#    dt: d
+#    data: [0.9999633526194376, -0.003625811871560086, 0.007755443660172947, 0.003680398547259526, 0.9999684752771629, -0.007035845251224894, -0.007729688520722713, 0.007064130529506649, 0.999945173484644]
+# RIGHT.P:  !!opencv-matrix
+#    rows: 3
+#    cols: 4
+#    dt: d
+#    data: [435.2046959714599, 0, 367.4517211914062, -47.90639384423901, 0, 435.2046959714599, 252.2008514404297, 0, 0, 0, 1, 0]
+
+# IMU noise
+# get it from Project of **zed-examples/tutorials/tutorial 7 - sensor data/**.
+IMU.NoiseGyro: 0.007 # 1.6968e-04
+IMU.NoiseAcc:  0.0016 # 2.0000e-3
+IMU.GyroWalk:  0.0019474
+IMU.AccWalk:   0.0002509 # 3.0000e-3
+IMU.Frequency: 400.0
+
+
+#--------------------------------------------------------------------------------------------
+# ORB Parameters
+#--------------------------------------------------------------------------------------------
+
+# ORB Extractor: Number of features per image
+ORBextractor.nFeatures: 1200
+
+# ORB Extractor: Scale factor between levels in the scale pyramid 	
+ORBextractor.scaleFactor: 1.2
+
+# ORB Extractor: Number of levels in the scale pyramid	
+ORBextractor.nLevels: 8
+
+# ORB Extractor: Fast threshold
+# Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
+# Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
+# You can lower these values if your images have low contrast			
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
+
+#--------------------------------------------------------------------------------------------
+# Viewer Parameters
+#--------------------------------------------------------------------------------------------
+Viewer.KeyFrameSize: 0.05
+Viewer.KeyFrameLineWidth: 1.0
+Viewer.GraphLineWidth: 0.9
+Viewer.PointSize: 2.0
+Viewer.CameraSize: 0.08
+Viewer.CameraLineWidth: 3.0
+Viewer.ViewpointX: 0.0
+Viewer.ViewpointY: -0.7
+Viewer.ViewpointZ: -1.8
+Viewer.ViewpointF: 500.0
+Viewer.imageViewScale: 1.0
+
