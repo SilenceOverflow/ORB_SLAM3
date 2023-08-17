@@ -73,7 +73,7 @@ public:
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "Stereo_Inertial");
+  ros::init(argc, argv, "ZED2_Stereo_Inertial");
   ros::NodeHandle n("~");
   ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info);
   bool bEqual = false;
